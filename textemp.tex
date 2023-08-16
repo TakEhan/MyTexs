@@ -1,0 +1,133 @@
+\documentclass[a4j,uplatex,twocolumn,english]{jsarticle}%draftが入ってると，画像が実際には表示されない．
+\usepackage[dvipdfmx]{graphicx,xcolor}
+\usepackage{color}
+\usepackage{float}%[H]option
+
+\usepackage{amsmath, amssymb}%amssymbはamsfontsを呼ぶらしい%数学
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs=true}%直前と合わせて参照した数式のみに数式番号を振る．
+\usepackage[uplatex,deluxe,expert,jis2004]{otf}%otfパッケージ，uplatex対応，縦書き文字対応，多書体対応
+%\usepackage[sourcehan,prefer2004jis]{pxchfon}%フォントの変更
+\usepackage[T1]{fontenc}%フォントエンコードの変更
+\usepackage[prefernoncjk]{pxcjkcat}%ローマ文字以外の文字の利用prefernoncjk
+\usepackage{grffile}%ファイル名につけられる符号の拡張
+\usepackage{lmodern}%新しい欧文フォントの読み込み
+%\usepackage[dvipdfm,left=13truemm,right=13truemm,top=20truemm,bottom=25truemm]{geometry}%dvipdfmxを利用しているために，dvipdfmを指定する必要があるらしい
+\usepackage[dvipdfmx,bookmarks=true,bookmarksnumbered=true,bookmarkstype=toc]{hyperref}
+\usepackage[dvipdfmx]{pxjahyper}
+\hypersetup{pdftitle={PDFtitle},pdfauthor={PDFauth},pdfkeywords={PDFkeys}}
+
+\usepackage{comment}
+\usepackage{siunitx}
+\usepackage{enumitem}%enumerate系統はこちらに統合されている．こちらの方の環境が新しいため，こちらを用いるべきである．
+%\usepackage{subcaption}%doublePictAltで利用しているサブキャプションを呼ぶ．
+%\captionsetup{compatibility=false}%直前のsubcaptionのエラー消し
+
+\renewcommand{\abstractname}{Abstract}
+\renewcommand{\figurename}{Fig. }
+\renewcommand{\tablename}{Table }
+\DeclareMathOperator{\erf}{erf}
+
+%\usepackage{multicol}
+\usepackage[balance]{nidanfloat}
+
+\newcommand{\doublePict}[7]{{
+\begin{tabular}{cc}
+\begin{minipage}{0.5\hsize}%fig1
+ \begin{figure}[H]
+ \centering
+ %\flushleft
+  \includegraphics[width=#7mm]{#1}
+  %.epsであればbb中でclipを指定したほうが良い．
+ \caption{#2}
+ \label{#3}
+\end{figure}
+\end{minipage}
+\begin{minipage}{0.5\hsize}%fig2
+ \begin{figure}[H]
+\centering
+%\flushright
+  \includegraphics[width=#7mm]{#4}
+  %.epsであればbb中でclipを指定したほうが良い．
+ \caption{#5}
+ \label{#6}
+\end{figure}
+\end{minipage}%end1st
+\end{tabular}
+}}%私の発明品? 二つの画像を横並びに表示する．
+\newcommand{\doublePictAlt}[9]{{
+\begin{figure}[H]
+\begin{minipage}{0.45\linewidth}%fig1
+ \centering
+ %\flushleft
+  \includegraphics[width=#7mm]{#1}
+  %.epsであればbb中でclipを指定したほうが良い．
+ \subcaption{#2}
+ \label{#3}
+\end{minipage}
+\begin{minipage}{0.45\linewidth}%fig2
+\centering
+%\flushright
+  \includegraphics[width=#7mm]{#4}
+  %.epsであればbb中でclipを指定したほうが良い．
+ \subcaption{#5}
+ \label{#6}
+\end{minipage}%end1st
+\caption{#8}\label{#9}
+\end{figure}
+}}%こちらはキャプションをサブでつけられる．
+
+\newcommand{\kuroN}[1]{\rule[-0.5ex]{#1em}{2.5ex}}
+
+\newcommand{\singlePict}[4]{{
+ \begin{figure}[H]
+ \centering
+ %\flushleft
+  \includegraphics[width=#4]{#1}
+  %.epsであればbb中でclipを指定したほうが良い．
+ \caption{#2}
+ \label{#3}
+\end{figure}
+}}%見やすさのために作ったコマンド
+\usepackage[super]{nth}%nthの序数接尾辞を上につけるためのやつ．
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{assyStyleNeun.bib}
+\DeclareSortingTemplate{mysorting}{
+\sort{\citeorder}
+}
+\AtEveryBibitem{%
+\ifentrytype{article}{%
+}{}
+\ifentrytype{inproceedings}{%
+  \clearfield{volume}
+  \clearfield{number}
+}{}
+  %\clearlist{publisher}
+  \clearfield{isbn}
+  \clearfield{issn}
+  \clearlist{location}
+  \clearfield{doi}
+  \clearfield{url}
+}
+\DeclareFieldFormat*{edition}{\nth{#1}}
+%\DeclareFieldFormat*{booktitle}{\textup{#1}}
+%\DeclareFieldFormat*{title}{\textup{#1}
+\usepackage{tipa,tipx}%発音記号を入力するためのパッケージhttp://www.ring.gr.jp/pub/text/CTAN/fonts/tipa/tipaman.pdf
+
+\begin{document}
+\title{title}
+\author{auth}
+\date{\today}
+\begin{abstract}
+abst.
+%【編集方針】
+%全角カンマおよび全角ピリオドを利用する．数値は原則的に半角数字を用いるが，熟語・参考文献中ではこの限りでない．
+%図・表の位置は大きくない図（段の幅に収まると判断したもの）ではその場に，大きな図ではページの下，上の優先順で配置する．また，図表中およびキャプションは英語を用いる．キャプションはそれぞれFig.およびTableとし，番号との間にスペースを配置する．
+%参考文献の表記は原則IEEE準拠とする．
+%編集の予定が特にある部分について角括弧【】を用いて強調する．
+\end{abstract}
+\maketitle
+\section{Introduction}\label{shoron}
+\newrefcontext[sorting=mysorting]
+\printbibliography
+\end{document}
